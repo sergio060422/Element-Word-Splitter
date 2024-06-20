@@ -1,0 +1,53 @@
+.elmnt {
+    height: 100px;
+    width: 100px;
+    background-color: #2A4165;
+    border-width: 5%;
+    border-color: black;
+    border-style: solid;
+    border-radius: 12px;
+    position: relative;
+    display: inline-block;
+    margin-right: 3px;
+}
+#ini{
+    display: none;
+}
+#symbol {
+    font-size: 36px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.info {
+    position: absolute;
+    color: white;
+}
+#name {
+    font-size: 16px;
+    top: 73%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#number, #mass {
+    font-size: 16px;
+    padding-top: 8%;
+    padding-left: 8%;
+}
+#mass {
+    right: 8%;
+}
+#get {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+ 
+}
+#get_text {
+    height: fit-content;
+    padding: 0px;
+    margin: 0px;
+}
+#txt{
+    resize: none;
+}
