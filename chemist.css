@@ -10,9 +10,6 @@
     display: inline-block;
     margin-right: 3px;
 }
-#ini{
-    display: none;
-}
 #symbol {
     font-size: 36px;
     top: 50%;
@@ -41,7 +38,6 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
- 
 }
 #get_text {
     height: fit-content;

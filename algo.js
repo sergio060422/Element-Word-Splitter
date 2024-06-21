@@ -6,9 +6,13 @@ function ft(){
 
 function give(data){
     let gb = document.getElementById("get");
+    let txt = document.getElementById("txt");
     table = data;
     get();
-    gb.addEventListener("click", get_text);
+    //gb.addEventListener("click", get_text);
+    setInterval(function (){
+        get_text();
+    }, 50);
 }
 
 let elements = [], names = [], cat = [], colors = ["#2A4165", "#623842", "#244D57", "#622E39", "#523E1B", "#2A4165", "#2F4D47", "#433C65", "#004A77", "#613B28", "#46474C"];
@@ -44,14 +48,14 @@ function get(){
     }
 }
 
-let map = new Map();
+let memo = new Map();
 
 function make(i, n, word, ans, v = []){
     if(i == n){
         return [1, ans, v];
     }
-    if(map[[i, ans]] != undefined){
-        return map[[i, ans]];
+    if(memo[[i, ans]] != undefined){
+        return memo[[i, ans]];
     }
     else if(i == n - 1){
         let s = word[i];
@@ -63,7 +67,7 @@ function make(i, n, word, ans, v = []){
                 
                 v.push(names[p]);
                 
-                return map[[i, ans]] = make(i + 1, n, word, ans + s, v);
+                return memo[[i, ans]] = make(i + 1, n, word, ans + s, v);
             }
         }
     }
@@ -79,7 +83,7 @@ function make(i, n, word, ans, v = []){
                 
                 v.push(names[p]);             
                 
-                return map[[i, ans]] = make(i + 1, n, word, ans + s1, v);
+                return memo[[i, ans]] = make(i + 1, n, word, ans + s1, v);
             }
         }
         if(elements.includes(s2)){
@@ -88,14 +92,14 @@ function make(i, n, word, ans, v = []){
                 
                 v.push(names[p]);
                 
-                return map[[i, ans]] = make(i + 2, n, word, ans + s2, v);
+                return memo[[i, ans]] = make(i + 2, n, word, ans + s2, v);
             }
         }
     }
     return [0, "", v];
 }
 
-let curr = 0;
+let curr = 1;
 
 function add_element(elmnt_name){
      let index = num[elmnt_name];
@@ -103,7 +107,8 @@ function add_element(elmnt_name){
      let place = document.getElementById("bd");
     
      ebox.className = "elmnt";
-     ebox.id = index;
+     ebox.id = curr + "";
+     curr++;
      place.appendChild(ebox);
      
      let number = document.createElement("span");
@@ -156,17 +161,39 @@ function change(){
 
 }
 
+function letter(c){
+    if(c.toLowerCase() != c.toUpperCase()){
+        return 1;
+    }
+    return 0;
+}
+
 function get_text(){
     let textarea = document.getElementById("txt");
     let text = textarea.value;
-    let ans = make(0, text.length + "", text, "", []);
-
-    for(let i = ans[2].length - 1; i >= 0; i--){
-        add_element(ans[2][i]);
-    }
-
+    text = text.toLowerCase();
+    let curr_elmnts = document.getElementsByClassName("elmnt");
+    memo = new Map();
     
+    let fixed = "";
+    
+    for(let i = 0; i < text.length; i++){
+        if(letter(text[i])){
+            fixed += text[i];
+        }
+    }
+    
+    let res = make(0, fixed.length, fixed, "", []);
+
+    if(res[0]){
+        for(let i = curr_elmnts.length - 1; i >= 0; i--){
+            curr_elmnts.item(i).remove();
+        }
+        for(let i = res[2].length - 1; i >= 0; i--){
+            add_element(res[2][i]);
+        }
+    }
 }
 
 window.addEventListener("load", ft);
-window.addEventListener("load", get_text);
+
