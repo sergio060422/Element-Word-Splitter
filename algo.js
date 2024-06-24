@@ -1,23 +1,24 @@
-let table;
+let table, alpha = "qwertyuiopasdfghjklzxcvbnm";
 
 function ft(){
     fetch("PeriodicTableJSON.json").then(ans => ans.json()).then(data => give(data));
 }
 
 function give(data){
-    let gb = document.getElementById("get");
     let txt = document.getElementById("txt");
+    let bd = document.getElementById("bd");
+    let showbox = document.createElement("div");
+    showbox.className = "showbox";
+    showbox.id = "1s";
+    bd.appendChild(showbox);
     table = data;
     get();
-    //gb.addEventListener("click", get_text);
-    setInterval(function (){
-        get_text();
-    }, 50);
+    txt.addEventListener("input", set_text);  
 }
 
 let elements = [], names = [], cat = [], colors = ["#2A4165", "#623842", "#244D57", "#622E39", "#523E1B", "#2A4165", "#2F4D47", "#433C65", "#004A77", "#613B28", "#46474C"];
 
-let assing = new Map(), catcolor = new Map(), mass = new Map(), num = new Map();
+let assing = new Map(), catcolor = new Map(), mass = new Map(), num = new Map(), symb = new Map();
 let p = 0;
 
 function get(){
@@ -33,7 +34,8 @@ function get(){
         names.push(name);
         mass[name] = atomic_mass;
         num[name] = i;
-        
+        symb[name] = symbol;
+
         if(category.includes("unknow")){
             category = "unknow";
         }
@@ -54,7 +56,7 @@ function make(i, n, word, ans, v = []){
     if(i == n){
         return [1, ans, v];
     }
-    if(memo[[i, ans]] != undefined){
+    else if(memo[[i, ans]] != undefined){
         return memo[[i, ans]];
     }
     else if(i == n - 1){
@@ -96,15 +98,16 @@ function make(i, n, word, ans, v = []){
             }
         }
     }
-    return [0, "", v];
+    
+    return [0, ans, v];
 }
 
-let curr = 1;
+let curr = 0;
 
 function add_element(elmnt_name){
      let index = num[elmnt_name];
      let ebox = document.createElement("div");
-     let place = document.getElementById("bd");
+     let place = document.getElementById("shb");
     
      ebox.className = "elmnt";
      ebox.id = curr + "";
@@ -136,29 +139,17 @@ function add_element(elmnt_name){
      symbol.textContent = table["elements"][index]["symbol"];
      name.textContent = table["elements"][index]["name"];
      ebox.style.backgroundColor = assing[table["elements"][index]["name"]];
-     
-    
 }
 
-
-function change(){
-    let number = document.getElementById("number");
-    let symbol = document.getElementById("symbol");
-    let name = document.getElementById("name");
-    let ebox = document.getElementById("ebox");
-    let atomic_mass = document.getElementById("mass");
+function add_space(){
+    let ebox = document.createElement("div");
+    let place = document.getElementById("shb");
     
-    curr++;
-    if(curr >= 118){
-        curr = 0;
-    }
-    
-    number.textContent = table["elements"][curr]["number"];
-    atomic_mass.textContent = mass[table["elements"][curr]["name"]];
-    symbol.textContent = table["elements"][curr]["symbol"];
-    name.textContent = table["elements"][curr]["name"];
-    ebox.style.backgroundColor = assing[table["elements"][curr]["name"]];
-
+    ebox.className = "elmnt";
+    place.appendChild(ebox);
+    ebox.style.width = "50px";
+    ebox.style.display = "inline-block";
+    ebox.style.opacity = "0";
 }
 
 function letter(c){
@@ -168,32 +159,50 @@ function letter(c){
     return 0;
 }
 
-function get_text(){
-    let textarea = document.getElementById("txt");
-    let text = textarea.value;
-    text = text.toLowerCase();
-    let curr_elmnts = document.getElementsByClassName("elmnt");
-    memo = new Map();
-    
-    let fixed = "";
-    
+let lenp = 0;
+
+function set_text(){
+    let text_box = document.getElementById("txt");
+    let text = text_box.value;
+    let fixed = "", spaces = [], len = 0;
+
     for(let i = 0; i < text.length; i++){
         if(letter(text[i])){
             fixed += text[i];
+            len++;
+        }
+        else{
+            spaces.push(len);
         }
     }
-    
+
+    memo = new Map();
     let res = make(0, fixed.length, fixed, "", []);
+    let showbox = document.getElementById("shb");
 
     if(res[0]){
-        for(let i = curr_elmnts.length - 1; i >= 0; i--){
-            curr_elmnts.item(i).remove();
+        text_box.style.borderColor = "green";
+        for(let i = showbox.childNodes.length - 1; i >= 0; i--){
+            showbox.childNodes.item(i).remove();
         }
+        let curr_len = 0;
         for(let i = res[2].length - 1; i >= 0; i--){
+            if(spaces.includes(curr_len)){
+                add_space();
+            }
+            curr_len += symb[res[2][i]].length;
             add_element(res[2][i]);
         }
+        if(spaces.includes(curr_len)){
+            add_space();
+        }
+        lenp = len;
     }
+    else{
+        text_box.style.borderColor = "red";
+    }
+    
 }
 
-window.addEventListener("load", ft);
 
+window.addEventListener("load", ft);

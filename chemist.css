@@ -1,3 +1,4 @@
+
 .elmnt {
     height: 100px;
     width: 100px;
@@ -46,4 +47,14 @@
 }
 #txt{
     resize: none;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: black;
+    padding: 5px;
+}
+#txt:focus {
+    outline: none;
+}
+.showbox {
+    display: inline-block;
 }
