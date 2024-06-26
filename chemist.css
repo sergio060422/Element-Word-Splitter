@@ -51,10 +51,20 @@
     border-radius: 10px;
     border-color: black;
     padding: 5px;
+    margin-top: 10px;
+    width: 500px;
+    height: 200px;
+    background-color: lightgray;
 }
 #txt:focus {
     outline: none;
 }
 .showbox {
     display: inline-block;
+
+}
+#hd {
+    
+    border-bottom: solid;
+
 }
