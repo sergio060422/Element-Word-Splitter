@@ -165,7 +165,7 @@ function set_text(){
     let text_box = document.getElementById("txt");
     let text = text_box.value;
     let fixed = "", spaces = [], len = 0;
-
+    console.log(text.length);
     for(let i = 0; i < text.length; i++){
         if(letter(text[i])){
             fixed += text[i];

@@ -1,4 +1,7 @@
-
+* {
+    margin: 0px;
+    padding: 0px;
+}
 .elmnt {
     height: 100px;
     width: 100px;
@@ -35,36 +38,73 @@
 #mass {
     right: 8%;
 }
-#get {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
 #get_text {
-    height: fit-content;
-    padding: 0px;
-    margin: 0px;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 #txt{
     resize: none;
     border-width: 2px;
     border-radius: 10px;
     border-color: black;
-    padding: 5px;
-    margin-top: 10px;
     width: 500px;
     height: 200px;
-    background-color: lightgray;
+    background-color: lightcyan;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    padding: 10px;
 }
 #txt:focus {
     outline: none;
 }
 .showbox {
-    display: inline-block;
-
+    display: block;
+    text-align: center;
 }
 #hd {
-    
-    border-bottom: solid;
+    height: 100px;
+    background-color: lightseagreen;
+    padding-left: 10px;
+}
+body {
+    background-image: url("light4.jpg");
+}
 
+.elmnt {
+    margin-bottom: 10px;
+    text-align:justify;
+    cursor: pointer;
+}
+h1 {
+    font-size: 48px;
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+    font-family:system-ui;
+    color: black;
+}
+nav {
+    height: 50px;
+    background-color: darkcyan;
+}
+a {
+    font-size: 22px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
+    font-family: system-ui;
+}
+#bar {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#rnd {
+    border-left: solid;
+    border-right: solid;
+    padding: 0px 10px 0px 10px;
+    border-width: thin;
 }
